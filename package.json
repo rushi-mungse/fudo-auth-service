@@ -4,15 +4,19 @@
   "description": "fudo auth service backend.",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node src/index.ts",
+    "format:fix": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rushi-mungse/fudo-auth-service.git"
   },
   "keywords": [
-    "[\"backend\"",
-    "\"fodo\"]"
+    "backend",
+    "fodo"
   ],
   "author": "rushi-mungse <mungse.rushi@gmail.com>",
   "license": "MIT",
@@ -21,6 +25,11 @@
   },
   "homepage": "https://github.com/rushi-mungse/fudo-auth-service#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.2.5",
     "typescript": "^5.4.2"
   }
 }
