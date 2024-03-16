@@ -1,0 +1,23 @@
+{
+  "name": "fudo-auth-service",
+  "version": "0.0.1",
+  "description": "fudo auth service backend.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rushi-mungse/fudo-auth-service.git"
+  },
+  "keywords": [
+    "[\"backend\"",
+    "\"fodo\"]"
+  ],
+  "author": "rushi-mungse <mungse.rushi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rushi-mungse/fudo-auth-service/issues"
+  },
+  "homepage": "https://github.com/rushi-mungse/fudo-auth-service#readme"
+}
