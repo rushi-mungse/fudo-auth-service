@@ -7,7 +7,7 @@
     "dev": "node src/index.ts",
     "format:fix": "prettier . --write",
     "format:check": "prettier . --check",
-    "lint:check": "eslint .",
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky"
   },
@@ -19,6 +19,12 @@
     "backend",
     "fodo"
   ],
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint:fix",
+      "npm run format:fix"
+    ]
+  },
   "author": "rushi-mungse <mungse.rushi@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -31,6 +37,7 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.2.5",
     "typescript": "^5.4.2"
   }
