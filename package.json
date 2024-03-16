@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/rushi-mungse/fudo-auth-service/issues"
   },
-  "homepage": "https://github.com/rushi-mungse/fudo-auth-service#readme"
+  "homepage": "https://github.com/rushi-mungse/fudo-auth-service#readme",
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  }
 }
