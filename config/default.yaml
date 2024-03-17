@@ -1,2 +1,5 @@
 server:
   port: 5000
+
+database:
+  url: mongodb://localhost:27017/auth?authSource=admin&w=1
