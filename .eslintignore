@@ -1,0 +1,11 @@
+dist
+node_modules
+*.test.ts
+tests/
+.github
+jest.config.js
+tsconfig.josn
+.prettierrc.josn
+.gitignore
+package.josn
+package-lock.json
