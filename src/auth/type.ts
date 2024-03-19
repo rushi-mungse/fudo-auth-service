@@ -1,5 +1,3 @@
-import { Request } from "express-jwt"
-import { TJwtPayload } from "../types"
 import { Document } from "mongoose"
 
 export type Maybe<T> = T | null | undefined
@@ -16,11 +14,6 @@ export interface IUser {
 }
 
 export type IUserModel = IUser & Document
-
-export interface AuthRequest<Body = null> extends Request {
-  auth: TJwtPayload
-  body: Body
-}
 
 export interface ISendOpt {
   fullName: string
