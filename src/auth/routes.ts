@@ -3,6 +3,7 @@ import express, { NextFunction, Response, Request } from "express"
 import logger from "../config/logger"
 import {
   AuthRequest,
+  IChangePassword,
   IForgetPassword,
   ILoginData,
   ISendOpt,
@@ -31,6 +32,7 @@ import loginVlaidator from "./validators/login-validator"
 import forgetPasswordValidator from "./validators/forget-password-validator"
 import setPasswordValidator from "./validators/set-password-validator"
 import updateFullNameValidator from "./validators/update-fullname-validator"
+import changePasswordValidator from "./validators/change-password-validator"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -121,6 +123,19 @@ authRouter.post(
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.updateFullName(
       req as AuthRequest<IUpdateFullName>,
+      res,
+      next,
+    ),
+  ),
+)
+
+authRouter.post(
+  "/change-password",
+  changePasswordValidator,
+  [checkAccessToken],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.changePassword(
+      req as AuthRequest<IChangePassword>,
       res,
       next,
     ),
