@@ -16,12 +16,14 @@ import {
 import { ICredentialService, TJwtPayload } from "../types"
 import AuthService from "./service"
 import TokenService from "../service/token"
+import { UploadApiResponse } from "cloudinary"
 
 class AuthController {
   constructor(
     private authService: AuthService,
     private credentialService: ICredentialService,
     private tokenService: TokenService,
+    private uploadFile: (localPath: string) => Promise<UploadApiResponse>,
     private logger: Logger,
   ) {}
 
@@ -467,6 +469,28 @@ class AuthController {
     return res.json({
       user: null,
       message: "User deleted successfully",
+    })
+  }
+
+  async updateUserProfilePicture(
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const userId = req.auth.userId
+    const file = req.file
+    if (!file) return next(createHttpError(400, "User picture not found!"))
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+
+    const uploadedFile = await this.uploadFile(file.path)
+    user.avatar = uploadedFile.url
+
+    await this.authService.save(user)
+    return res.json({
+      user,
+      message: "User profile picture updated successfully.",
     })
   }
 }
