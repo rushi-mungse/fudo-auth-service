@@ -1,3 +1,4 @@
+import { Request } from "express-jwt"
 import { JwtPayload } from "jsonwebtoken"
 import { IUserModel } from "../auth/type"
 
@@ -5,6 +6,11 @@ export type TJwtPayload = JwtPayload & {
   userId: string
   role: string
   tokenId?: string
+}
+
+export interface AuthRequest<Body = null> extends Request {
+  auth: TJwtPayload
+  body: Body
 }
 
 export interface ICredentialService {
