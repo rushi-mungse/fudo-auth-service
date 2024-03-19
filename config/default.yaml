@@ -3,3 +3,38 @@ server:
 
 database:
   url: mongodb://localhost:27017/auth?authSource=admin&w=1
+
+urls:
+  jwks_url: http://localhost:5000/.well-known/jwks.json
+
+secrets:
+  hash_secret: thisishashsecretchangeafterthat
+  private_key: |-
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEApvI6bAiar8Vsgi1k+VHUugMHtOwujhapk/EOA6pNODyMdQRb
+    SoYQtmMk4CUG8NZcaHzQ/I4FnLbEt7wKMrnneYGWuprGd8mS17p8Yx+JL2YnQIVK
+    ef1bFLu3suN9M81YpaqR3r7SGLXbSVHNkTPvRUrUw4LcnT563evnB+bnLCTy+9eE
+    /Tw5CIrfk7K4Owuk5Fai4odV7U9+jAqdF8JRO5t2ZztaQrvKfI2V+/nyTYnqKsyb
+    QLAE77hCS2s/+EIxLRLdJOQTlrKSmW9z6LEeZsoXRPW9VCTJ1DBLFqZ4l1VYsHuv
+    nMZ6T5oNrPJ+eXL0bqGxQHUNPh3iGa+NgTvf4QIDAQABAoIBAAGcy1Wpy5yxAnhL
+    afNCiBR33QYxVc3HiEHGjUUZyv8lDpI+xYb1vomUcZG8qdF/sIrN0dLuqD04QrQn
+    m82boBG7X7JTtmEH0GRHB9aJQnDzwqNL5klBWjTcD00qB1aNwDJxcFE/dJYKg6C0
+    qpCheMkpjN6KkAjwxo0IL0YTQ95YRQX0OrL/kd8qMI0R09xWPaV90f8TtLsrXKry
+    /UhVYNdylGteXv2dEbE9jwmFKbrgsfa7H+tmDx0bFeuiMUg5IK1Z+TwqoZ6aJZkY
+    vdoRS3lC/ZwMiTjACIK+lRQDDfxUOlbG5Mw3lkhWEfXw/9XJJF9zDeQNDiHyey+Q
+    WVLHFOUCgYEA0zjzNd2IakOpiCgxy761viet0XdoEC2x0GbEQC0GIU5rwIrRXxzh
+    SJl49BItDbLZmLr2429mP23xEbJDon1M57wrqxwXXI0ku2Rbu6gDnrR497gpnQn7
+    uhEn5bgZ/1XwMkY9wyc8khD/A3xOtmWVRoVtK8XNEsU4hQQORZyeuicCgYEAylZn
+    e4SzDShX89OxFA17hPmJ4nIeIwS8E+84hNMC4/cgZWbPwBu4AfbLuVaCYL7qNvoc
+    oivjPsRtZbD4VOugZfYZgtzFhZpunn1U2k0n0flOv6+E1pGj5pm+dU5RbcbEum6Y
+    r8AzkBx9zR4NbStU64xrYqf5MXkNWQWkKEv7grcCgYAdHbqY8EK/szgJZtEGbvGK
+    ltmlCDq2EDZ0rdXbqtkveinsTrZxz/9WDKHZsy+2tbK9FPi3fUGw+KzEbbhZC8Cw
+    KQYz/hlSTrqDgmAKzCxDkkkijKZf2WJz0a2YQvqCcgw8QeZ9okj9MY6VomsPRY2A
+    PSBBanDMZ5dU7qww+FgA/QKBgQCDfpmr5TZzw5c9J4M6M/TlG0LnviAlw+ryzZGe
+    iH+lZTJRk/pJr/nqlNga78S1WP1fkzXOktURMpih8NvCXIsWGFTF/fID/LQNHghq
+    AqBxTiNGYavjwiyRLbNgCvDSdc3eFwf1l+QqsMl05yX0n6eFmPEk4WMKKtBo3Uis
+    w4yFiwKBgF3N7ddd31ypkDGfipo44ap84y2O6PWtIihy6aEGKT5F1dN9Uw6XJkJ1
+    P06eU3Bh8W5STremOU9q/SSREvb/po1+V9uTmqaDNr0xdTYKr1J0lwL/o2lzt7yx
+    BwHBFryPdSUlJV79j7XOGmVteRC3VRlZXpWBqm7bKx2i/+8YY5A8
+    -----END RSA PRIVATE KEY-----
+  refresh_token_secret: MIIBCgKCAQEA1J4s4Zbdvu5++uEQTawtNNXdb+0WIIWKmERzM5AhNF5zsNbEhIOumwfdAh5EKdaGDbMzhiA5edw+2ODtnyae8PCki8aFR4WvVbDzZh3lEA2SZF413/ILje4GR7ol9eVxlKyyboZqBlNuwszuJUbEIN0SjJ39mH8A4wUwaaXNE/ulhPWpO3B8YXgTTQnlJ6QdQ6NUC+tCUKoUo1rkyu9PjG6BDyRZa+5bGu9ZdvONmmgBWMA3vNwfZJl0naGG21hMSg87gR86b/G/1EIrIrPoXUxDeD4aYhWdb6HWiSS4lKsX5BnvHrX8WcvmyTW8rPvunUT3Z1h71pE9M+oHzwmqHwIDAQAB
