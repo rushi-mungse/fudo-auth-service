@@ -5,6 +5,7 @@ import createHttpError from "http-errors"
 
 import {
   AuthRequest,
+  IChangePassword,
   IForgetPassword,
   ILoginData,
   ISendOpt,
@@ -414,6 +415,40 @@ class AuthController {
     return res.json({
       user,
       message: "Updated user full name successfully.",
+    })
+  }
+
+  async changePassword(
+    req: AuthRequest<IChangePassword>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const result = validationResult(req)
+    if (!result.isEmpty())
+      return res.status(400).json({ error: result.array() })
+
+    const userId = req.auth.userId
+    const { newPassword, oldPassword } = req.body
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+
+    const hashPassword = user.password
+    const isMatch = await this.credentialService.hashCompare(
+      oldPassword,
+      hashPassword,
+    )
+    if (!isMatch)
+      return next(createHttpError(400, "Old password does not match!"))
+    const newHashPassword = await this.credentialService.hashData(newPassword)
+
+    user.password = newHashPassword
+    await this.authService.save(user)
+
+    return res.json({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      id: user._id,
+      message: "User password changed successfully",
     })
   }
 }
