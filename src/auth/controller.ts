@@ -451,6 +451,24 @@ class AuthController {
       message: "User password changed successfully",
     })
   }
+
+  async delete(req: AuthRequest, res: Response, next: NextFunction) {
+    const userId = req.auth.userId
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+
+    await this.tokenService.deleteUsingUserId(user._id as string)
+    await this.authService.delete(userId)
+
+    res.clearCookie("accessToken")
+    res.clearCookie("refreshToken")
+
+    return res.json({
+      user: null,
+      message: "User deleted successfully",
+    })
+  }
 }
 
 export default AuthController
