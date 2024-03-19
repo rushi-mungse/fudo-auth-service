@@ -52,3 +52,7 @@ export interface ISetPassword {
   otp: string
   hashOtp: string
 }
+
+export interface IUpdateFullName {
+  fullName: string
+}
