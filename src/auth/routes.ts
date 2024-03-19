@@ -34,7 +34,7 @@ import setPasswordValidator from "./validators/set-password-validator"
 import updateFullNameValidator from "./validators/update-fullname-validator"
 import changePasswordValidator from "./validators/change-password-validator"
 import uploadOnCloudinary from "../config/uploadOnCloudinary"
-import uploadFile from "../middleware/multer"
+import uploadFile from "../middleware/uploadFile"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
