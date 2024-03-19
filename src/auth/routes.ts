@@ -142,4 +142,12 @@ authRouter.post(
   ),
 )
 
+authRouter.delete(
+  "/",
+  [checkAccessToken],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.delete(req as AuthRequest, res, next),
+  ),
+)
+
 export default authRouter
