@@ -33,6 +33,8 @@ import forgetPasswordValidator from "./validators/forget-password-validator"
 import setPasswordValidator from "./validators/set-password-validator"
 import updateFullNameValidator from "./validators/update-fullname-validator"
 import changePasswordValidator from "./validators/change-password-validator"
+import uploadOnCloudinary from "../config/uploadOnCloudinary"
+import uploadFile from "../middleware/multer"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -42,6 +44,7 @@ const authController = new AuthController(
   authService,
   credentialService,
   tokenService,
+  uploadOnCloudinary,
   logger,
 )
 
@@ -147,6 +150,14 @@ authRouter.delete(
   [checkAccessToken],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.delete(req as AuthRequest, res, next),
+  ),
+)
+
+authRouter.post(
+  "/upload-profile-picture",
+  [checkAccessToken, uploadFile.single("avatar")],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.updateUserProfilePicture(req as AuthRequest, res, next),
   ),
 )
 
