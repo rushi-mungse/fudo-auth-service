@@ -7,6 +7,7 @@ import {
   ILoginData,
   ISendOpt,
   ISetPassword,
+  IUpdateFullName,
   IVerifyOtp,
 } from "./type"
 import { asyncWrapper } from "../utils/async-wrapper"
@@ -29,6 +30,7 @@ import invalidToken from "../middleware/invalid-token"
 import loginVlaidator from "./validators/login-validator"
 import forgetPasswordValidator from "./validators/forget-password-validator"
 import setPasswordValidator from "./validators/set-password-validator"
+import updateFullNameValidator from "./validators/update-fullname-validator"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -109,6 +111,19 @@ authRouter.post(
   [invalidToken],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.setPassword(req as AuthRequest<ISetPassword>, res, next),
+  ),
+)
+
+authRouter.post(
+  "/update-fullname",
+  updateFullNameValidator,
+  [checkAccessToken],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.updateFullName(
+      req as AuthRequest<IUpdateFullName>,
+      res,
+      next,
+    ),
   ),
 )
 
