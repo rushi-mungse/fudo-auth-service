@@ -56,3 +56,8 @@ export interface ISetPassword {
 export interface IUpdateFullName {
   fullName: string
 }
+
+export interface IChangePassword {
+  oldPassword: string
+  newPassword: string
+}
