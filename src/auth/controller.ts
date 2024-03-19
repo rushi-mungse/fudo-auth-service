@@ -9,6 +9,7 @@ import {
   ILoginData,
   ISendOpt,
   ISetPassword,
+  IUpdateFullName,
   IVerifyOtp,
 } from "./type"
 import { ICredentialService, TJwtPayload } from "../types"
@@ -390,6 +391,30 @@ class AuthController {
     await this.authService.save(user)
 
     return res.json({ user })
+  }
+
+  async updateFullName(
+    req: AuthRequest<IUpdateFullName>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const result = validationResult(req)
+    if (!result.isEmpty())
+      return res.status(400).json({ error: result.array() })
+
+    const userId = req.auth.userId
+    const { fullName } = req.body
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+
+    user.fullName = fullName
+    await this.authService.save(user)
+
+    return res.json({
+      user,
+      message: "Updated user full name successfully.",
+    })
   }
 }
 
