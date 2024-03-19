@@ -2,7 +2,6 @@ import express, { NextFunction, Response, Request } from "express"
 
 import logger from "../config/logger"
 import {
-  AuthRequest,
   IChangePassword,
   IForgetPassword,
   ILoginData,
@@ -11,6 +10,7 @@ import {
   IUpdateFullName,
   IVerifyOtp,
 } from "./type"
+import { AuthRequest } from "../types"
 import { asyncWrapper } from "../utils/async-wrapper"
 
 import AuthController from "./controller"
