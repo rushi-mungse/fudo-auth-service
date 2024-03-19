@@ -4,7 +4,6 @@ import { Logger } from "winston"
 import createHttpError from "http-errors"
 
 import {
-  AuthRequest,
   IChangePassword,
   IForgetPassword,
   ILoginData,
@@ -13,7 +12,7 @@ import {
   IUpdateFullName,
   IVerifyOtp,
 } from "./type"
-import { ICredentialService, TJwtPayload } from "../types"
+import { ICredentialService, TJwtPayload, AuthRequest } from "../types"
 import AuthService from "./service"
 import TokenService from "../service/token"
 import { UploadApiResponse } from "cloudinary"
