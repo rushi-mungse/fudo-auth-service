@@ -4,7 +4,6 @@ import jwksClient from "jwks-rsa"
 import { GetVerificationKey, expressjwt } from "express-jwt"
 
 import { ICookieData } from "../types"
-import logger from "../config/logger"
 
 const JWKS_URL: string = config.get("urls.jwks_url")
 
