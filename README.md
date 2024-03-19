@@ -12,6 +12,10 @@
 - refresh
 - forget password
 - set password
+- update full name
+- change password
+- delete user
+- upload profile picture
 
 #### Send Otp Route
 
