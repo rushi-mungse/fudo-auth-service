@@ -195,7 +195,7 @@ email: string
 
 ---
 
-### Set Password (forget password set verify otp based)
+### Set Password Route (forget password set verify otp based)
 
 - API end point - `post`
 
@@ -206,19 +206,112 @@ api : http://localhost:5000/api/auth/set-password
 - Request
 
 ```ts
-email: string
-opt: string
-hashOtp: string
-password: string // set new password
-confirmPassword: string
+{
+  email: string
+  opt: string
+  hashOtp: string
+  password: string // set new password
+  confirmPassword: string
+}
 ```
 
 - Response
 
 ```ts
-user: UserData
+{
+  user: UserData
+}
 ```
 
 > set new password not automaticaly login after set forget password
+
+---
+
+### Update Full Name Route
+
+- API end point - `post`
+
+```terminal
+api : http://localhost:5000/api/auth/update-fullname
+```
+
+- Request
+
+```ts
+{
+  fullName: string // updated full name
+}
+```
+
+- Response
+
+```ts
+{
+  user: userData // updated user data
+}
+```
+
+---
+
+### Change Password Route
+
+- API end point - `post`
+
+```terminal
+api : http://localhost:5000/api/auth/change-password
+```
+
+- Request
+
+```ts
+{
+  oldPassword: string
+  newPassword: string
+}
+```
+
+- Response
+
+```ts
+user: userData // updated user data
+```
+
+---
+
+### Delete User Route
+
+- API end point - `delete`
+
+```terminal
+api : http://localhost:5000/api/auth/
+```
+
+- Response
+
+```ts
+message: "User deleted successfully"
+```
+
+---
+
+### Upload Profile Picture
+
+- API end point - `post`
+
+```terminal
+api : http://localhost:5000/api/auth/upload-profile-picture
+```
+
+- Request
+
+```ts
+avatar: form data [file] // updated full name
+```
+
+- Response
+
+```ts
+user: userData // updated user data
+```
 
 ---
