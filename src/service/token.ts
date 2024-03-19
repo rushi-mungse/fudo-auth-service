@@ -54,6 +54,10 @@ class TokenService {
   async delete(tokenId: string) {
     return await this.tokenModel.deleteOne({ _id: tokenId })
   }
+
+  async deleteUsingUserId(userId: string) {
+    return await this.tokenModel.deleteOne({ userId })
+  }
 }
 
 export default TokenService
