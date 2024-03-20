@@ -6,9 +6,9 @@ import express, {
 } from "express"
 
 import CategoryController from "./controller"
-import { asyncWrapper } from "../utils/async-wrapper"
+import { asyncWrapper } from "../../utils/async-wrapper"
 
-import { AuthRequest } from "../types"
+import { AuthRequest } from "../../types"
 import { ICategory } from "./type"
 
 import CategoryModel from "./model"
@@ -16,9 +16,9 @@ import CategoryModel from "./model"
 import categoryValidator from "./validator/category-validator"
 
 import CategoryService from "./service"
-import hasPermission from "../middleware/permission"
-import { UserRoles } from "../constants"
-import checkAccessToken from "../middleware/access-token"
+import hasPermission from "../../middleware/permission"
+import { UserRoles } from "../../constants"
+import checkAccessToken from "../../middleware/access-token"
 
 const categoryRouter = express.Router()
 const categoryService = new CategoryService(CategoryModel)

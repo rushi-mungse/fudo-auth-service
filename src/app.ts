@@ -2,9 +2,9 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 
-import authRouter from "./auth/routes"
+import authRouter from "./features/auth/routes"
 import errorMiddleware from "./middleware/error"
-import categoryRouter from "./category/routes"
+import categoryRouter from "./features/category/routes"
 
 const app = express()
 

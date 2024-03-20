@@ -3,7 +3,7 @@ import { validationResult } from "express-validator"
 import createHttpError from "http-errors"
 
 import CategoryService from "./service"
-import { AuthRequest } from "../types"
+import { AuthRequest } from "../../types"
 import { ICategory } from "./type"
 
 class CategoryController {
@@ -14,9 +14,14 @@ class CategoryController {
     if (!result.isEmpty())
       return res.status(400).json({ error: result.array() })
 
-    const { name } = req.body
+    const categoryData = req.body
+    const isCategoryExist = await this.categoryService.getByCategoryName(
+      categoryData.name,
+    )
+    if (isCategoryExist)
+      return next(createHttpError(400, "Category name already exist."))
 
-    const category = await this.categoryService.save({ name })
+    const category = await this.categoryService.save(categoryData)
     return res.status(201).json({
       category,
       message: "Product category created successfully.",

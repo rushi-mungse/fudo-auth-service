@@ -1,6 +1,6 @@
 import { Request } from "express-jwt"
 import { JwtPayload } from "jsonwebtoken"
-import { IUserModel } from "../auth/type"
+import { IUserModel } from "../features/auth/type"
 
 export type TJwtPayload = JwtPayload & {
   userId: string

@@ -12,9 +12,9 @@ import {
   IUpdateFullName,
   IVerifyOtp,
 } from "./type"
-import { ICredentialService, TJwtPayload, AuthRequest } from "../types"
+import { ICredentialService, TJwtPayload, AuthRequest } from "../../types"
 import AuthService from "./service"
-import TokenService from "../service/token"
+import TokenService from "../../service/token"
 import { UploadApiResponse } from "cloudinary"
 
 class AuthController {

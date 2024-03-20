@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from "express"
 
-import logger from "../config/logger"
+import logger from "../../config/logger"
 import {
   IChangePassword,
   IForgetPassword,
@@ -10,31 +10,31 @@ import {
   IUpdateFullName,
   IVerifyOtp,
 } from "./type"
-import { AuthRequest } from "../types"
-import { asyncWrapper } from "../utils/async-wrapper"
+import { AuthRequest } from "../../types"
+import { asyncWrapper } from "../../utils/async-wrapper"
 
 import AuthController from "./controller"
 
 import verifyOtpValidator from "./validators/verify-otp-validator"
 import sendOtpValidator from "./validators/send-otp-validator"
 
-import TokenService from "../service/token"
+import TokenService from "../../service/token"
 import AuthService from "./service"
-import CredentialService from "../service/credential"
+import CredentialService from "../../service/credential"
 
-import TokenModel from "../model/token"
+import TokenModel from "../../model/token"
 import UserModel from "./model"
 
-import checkAccessToken from "../middleware/access-token"
-import checkRefreshToken from "../middleware/refresh-token"
-import invalidToken from "../middleware/invalid-token"
+import checkAccessToken from "../../middleware/access-token"
+import checkRefreshToken from "../../middleware/refresh-token"
+import invalidToken from "../../middleware/invalid-token"
 import loginVlaidator from "./validators/login-validator"
 import forgetPasswordValidator from "./validators/forget-password-validator"
 import setPasswordValidator from "./validators/set-password-validator"
 import updateFullNameValidator from "./validators/update-fullname-validator"
 import changePasswordValidator from "./validators/change-password-validator"
-import uploadOnCloudinary from "../config/uploadOnCloudinary"
-import uploadFile from "../middleware/uploadFile"
+import uploadOnCloudinary from "../../config/uploadOnCloudinary"
+import uploadFile from "../../middleware/uploadFile"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
