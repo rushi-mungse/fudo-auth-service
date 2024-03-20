@@ -1,11 +1,9 @@
 import { Request } from "express"
-import config from "config"
 import jwksClient from "jwks-rsa"
 import { GetVerificationKey, expressjwt } from "express-jwt"
 
 import { ICookieData } from "../types"
-
-const JWKS_URL: string = config.get("urls.jwks_url")
+import { JWKS_URL } from "../config"
 
 const checkAccessToken = expressjwt({
   secret: jwksClient.expressJwtSecret({

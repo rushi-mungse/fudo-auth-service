@@ -1,11 +1,11 @@
 import { validationResult } from "express-validator"
 import createHttpError from "http-errors"
 import { Request, NextFunction, Response } from "express"
+import { UploadApiResponse } from "cloudinary"
 
 import { AuthRequest } from "../../types"
 import { IAttribute, IPriceConfiguration, IProduct, IProductBody } from "./type"
 import ProductService from "./service"
-import { UploadApiResponse } from "cloudinary"
 
 class ProductController {
   constructor(

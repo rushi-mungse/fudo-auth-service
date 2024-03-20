@@ -1,15 +1,14 @@
-import config from "config"
 import createHttpError from "http-errors"
 import { JwtPayload, sign, verify } from "jsonwebtoken"
 
 import TokenModel from "../model/token"
 import { IToken, TJwtPayload } from "../types"
+import { PRIVATE_KEY, REFRESH_TOKEN_SECRET } from "../config"
 
 class TokenService {
   constructor(private tokenModel: typeof TokenModel) {}
 
   signAccessToken(payload: TJwtPayload): string {
-    const PRIVATE_KEY: string = config.get("secrets.private_key")
     if (!PRIVATE_KEY) throw createHttpError(500, "PRIVATE_KEY is not found!")
 
     const accessToken = sign(payload, PRIVATE_KEY, {
@@ -22,9 +21,6 @@ class TokenService {
   }
 
   signRefreshToken(payload: TJwtPayload): string {
-    const REFRESH_TOKEN_SECRET: string = config.get(
-      "secrets.refresh_token_secret",
-    )
     if (!REFRESH_TOKEN_SECRET)
       throw createHttpError(500, "TOKEN_SECRET is not found!")
 
@@ -39,9 +35,6 @@ class TokenService {
   }
 
   verifyRefreshToken(refreshToken: string): JwtPayload | string {
-    const REFRESH_TOKEN_SECRET: string = config.get(
-      "secrets.refresh_token_secret",
-    )
     if (!REFRESH_TOKEN_SECRET)
       throw createHttpError(500, "SECRET_HASH is not found!")
     return verify(refreshToken, REFRESH_TOKEN_SECRET)

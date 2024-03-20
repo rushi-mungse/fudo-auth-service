@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import config from "config"
+import { DB_URL } from "./"
 
 const initDb = async () => {
-  const DB_URL: string = config.get("database.url")
+  if (!DB_URL) throw Error("Db not connected!")
   await mongoose.connect(DB_URL)
 }
 

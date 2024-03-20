@@ -1,12 +1,10 @@
 import { Request } from "express"
-import config from "config"
 import { expressjwt } from "express-jwt"
+
 import TokenModel from "../model/token"
-
 import { ICookieData, TJwtPayload } from "../types"
+import { REFRESH_TOKEN_SECRET } from "../config"
 import logger from "../config/logger"
-
-const REFRESH_TOKEN_SECRET: string = config.get("secrets.refresh_token_secret")
 
 const checkRefreshToken = expressjwt({
   secret: REFRESH_TOKEN_SECRET ?? "",
