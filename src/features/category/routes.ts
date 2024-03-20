@@ -13,7 +13,7 @@ import { ICategory } from "./type"
 
 import CategoryModel from "./model"
 
-import categoryValidator from "./validator/category-validator"
+import categoryValidator from "./validators/category-validator"
 
 import CategoryService from "./service"
 import hasPermission from "../../middleware/permission"
