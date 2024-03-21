@@ -181,4 +181,15 @@ authRouter.get(
   ),
 )
 
+authRouter.get(
+  "/:userId",
+  [
+    checkAccessToken,
+    hasPermission([UserRoles.ADMIN]) as unknown as RequestHandler,
+  ],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.getUser(req as AuthRequest, res, next),
+  ),
+)
+
 export default authRouter

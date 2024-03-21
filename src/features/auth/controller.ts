@@ -493,6 +493,15 @@ class AuthController {
     const users = await this.authService.gets()
     return res.json({ users })
   }
+
+  async getUser(req: AuthRequest, res: Response, next: NextFunction) {
+    const userId = req.params.userId
+    if (!userId) return next(createHttpError(400, "Invalid user id!"))
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+    return res.json({ user })
+  }
 }
 
 export default AuthController
