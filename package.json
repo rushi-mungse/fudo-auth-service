@@ -2,10 +2,10 @@
   "name": "fudo-auth-service",
   "version": "0.0.1",
   "description": "fudo auth service backend.",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "start": "node api/index.ts",
+    "dev": "nodemon api/index.ts",
     "build": "tsc",
     "format:fix": "prettier . --write",
     "format:check": "prettier . --check",

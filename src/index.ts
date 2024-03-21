@@ -1,7 +1,16 @@
-import app from "./app"
-import logger from "./config/logger"
+import express, { Request, Response } from "express"
+import cookieParser from "cookie-parser"
+import bodyParser from "body-parser"
+
+import authRouter from "./features/auth/routes"
+import errorMiddleware from "./middleware/error"
+import categoryRouter from "./features/category/routes"
+import productRouter from "./features/products/router"
 import initDb from "./config/db"
+import logger from "./config/logger"
 import { PORT } from "./config"
+
+const app = express()
 
 const startServer = async () => {
   try {
@@ -17,7 +26,22 @@ const startServer = async () => {
       logger.on("finish", () => process.exit(1))
     }
     logger.error("Server Internal Error!")
+    process.exit(1)
   }
 }
-
 void startServer()
+
+app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(express.static("public"))
+
+app.get("/", (req: Request, res: Response) => res.send({ message: "all ok!" }))
+
+app.use("/api/auth", authRouter)
+app.use("/api/category", categoryRouter)
+app.use("/api/product", productRouter)
+app.use(errorMiddleware)
+
+export default app
