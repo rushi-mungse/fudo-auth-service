@@ -1,4 +1,9 @@
-import express, { NextFunction, Response, Request } from "express"
+import express, {
+  NextFunction,
+  Response,
+  Request,
+  RequestHandler,
+} from "express"
 
 import logger from "../../config/logger"
 import {
@@ -35,6 +40,8 @@ import updateFullNameValidator from "./validators/update-fullname-validator"
 import changePasswordValidator from "./validators/change-password-validator"
 import uploadOnCloudinary from "../../config/uploadOnCloudinary"
 import uploadFile from "../../middleware/uploadFile"
+import hasPermission from "../../middleware/permission"
+import { UserRoles } from "../../constants"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -158,6 +165,19 @@ authRouter.post(
   [checkAccessToken, uploadFile.single("avatar")],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.updateUserProfilePicture(req as AuthRequest, res, next),
+  ),
+)
+
+// admin routes
+
+authRouter.get(
+  "/users",
+  [
+    checkAccessToken,
+    hasPermission([UserRoles.ADMIN]) as unknown as RequestHandler,
+  ],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.getUsers(req as AuthRequest, res, next),
   ),
 )
 

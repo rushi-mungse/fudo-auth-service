@@ -151,7 +151,6 @@ class AuthController {
     const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365
     const expiresAt = new Date(Date.now() + MS_IN_YEAR)
     const token = await this.tokenService.save({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       userId: newUser._id,
       expiresAt,
     })
@@ -233,7 +232,6 @@ class AuthController {
     const accessToken = this.tokenService.signAccessToken(payload)
     const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365
     const expiresAt = new Date(Date.now() + MS_IN_YEAR)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const token = await this.tokenService.save({ userId: user._id, expiresAt })
     const refreshToken = this.tokenService.signRefreshToken({
       ...payload,
@@ -281,7 +279,6 @@ class AuthController {
     const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365
     const expiresAt = new Date(Date.now() + MS_IN_YEAR)
     const token = await this.tokenService.save({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       userId: user._id,
       expiresAt,
     })
@@ -447,7 +444,6 @@ class AuthController {
     await this.authService.save(user)
 
     return res.json({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       id: user._id,
       message: "User password changed successfully",
     })
@@ -491,6 +487,11 @@ class AuthController {
       user,
       message: "User profile picture updated successfully.",
     })
+  }
+
+  async getUsers(req: AuthRequest, res: Response, next: NextFunction) {
+    const users = await this.authService.gets()
+    return res.json({ users })
   }
 }
 
