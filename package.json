@@ -6,13 +6,15 @@
   "scripts": {
     "start": "node src/index.ts",
     "dev": "nodemon src/index.ts",
+    "build": "tsc",
     "format:fix": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "vercel-build": "echo hello"
   },
   "repository": {
     "type": "git",

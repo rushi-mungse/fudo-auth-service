@@ -1,4 +1,4 @@
-import express from "express"
+import express, { Request, Response } from "express"
 import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 
@@ -14,6 +14,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static("public"))
+
+app.get("/", (req: Request, res: Response) => res.send({ message: "all ok!" }))
 
 app.use("/api/auth", authRouter)
 app.use("/api/category", categoryRouter)
