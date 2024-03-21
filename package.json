@@ -4,6 +4,7 @@
   "description": "fudo auth service backend.",
   "main": "index.ts",
   "scripts": {
+    "start": "node src/index.ts",
     "dev": "nodemon src/index.ts",
     "format:fix": "prettier . --write",
     "format:check": "prettier . --check",
