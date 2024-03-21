@@ -29,7 +29,6 @@ const startServer = async () => {
     process.exit(1)
   }
 }
-void startServer()
 
 app.use(express.json())
 app.use(bodyParser.json())
@@ -43,5 +42,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/product", productRouter)
 app.use(errorMiddleware)
+
+void startServer()
 
 export default app
