@@ -9,8 +9,16 @@ import productRouter from "./features/products/router"
 import initDb from "./config/db"
 import logger from "./config/logger"
 import { PORT } from "./config"
+import cors from "cors"
 
 const app = express()
+
+const corsOption: cors.CorsOptions = {
+  origin: ["http://localhost:5173"],
+  credentials: true,
+}
+
+app.use(cors(corsOption))
 
 const startServer = async () => {
   try {

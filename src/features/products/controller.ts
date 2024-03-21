@@ -139,7 +139,7 @@ class ProductController {
       return next(createHttpError(400, "Product not found!"))
     }
 
-    res.json({ product, message: "Product deleted successfully." })
+    res.json({ product })
   }
 }
 
