@@ -14,11 +14,7 @@ import cors from "cors"
 const app = express()
 
 const corsOption: cors.CorsOptions = {
-  origin: [
-    "https://fudo-admin.vercel.app/",
-    "http://localhost:5173",
-    "http://localhost:3000",
-  ],
+  origin: true,
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 }
