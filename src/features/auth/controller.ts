@@ -195,8 +195,17 @@ class AuthController {
 
     await this.tokenService.delete(tokenId)
 
-    res.clearCookie("accessToken")
-    res.clearCookie("refreshToken")
+    res.clearCookie("accessToken", {
+      secure: true,
+      sameSite: "none",
+      httpOnly: true,
+    })
+
+    res.clearCookie("refreshToken", {
+      secure: true,
+      sameSite: "none",
+      httpOnly: true,
+    })
 
     return res.json({
       user: null,
