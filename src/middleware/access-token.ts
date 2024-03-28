@@ -16,13 +16,14 @@ const checkAccessToken = expressjwt({
   algorithms: ["RS256"],
 
   getToken(req: Request) {
+    logger.info(req)
     const authHeader = req.headers.authorization
     if (authHeader && authHeader.split(" ")[1] !== "undefined") {
       const accessToken = authHeader.split(" ")[1]
       if (accessToken) return accessToken
     }
     const { accessToken } = req.cookies as ICookieData
-    logger.info(accessToken)
+
     return accessToken
   },
 })
