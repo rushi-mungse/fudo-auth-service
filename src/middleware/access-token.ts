@@ -16,7 +16,6 @@ const checkAccessToken = expressjwt({
   algorithms: ["RS256"],
 
   getToken(req: Request) {
-    logger.info(req)
     const authHeader = req.headers.authorization
     if (authHeader && authHeader.split(" ")[1] !== "undefined") {
       const accessToken = authHeader.split(" ")[1]
