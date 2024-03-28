@@ -31,3 +31,9 @@ export interface ICookieData {
   accessToken: string
   refreshToken: string
 }
+
+export interface GetQueryParams {
+  currentPage: number
+  perPage: number
+  q: string
+}
