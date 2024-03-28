@@ -8,6 +8,7 @@ import express, {
 import logger from "../../config/logger"
 import {
   IChangePassword,
+  ICreateUser,
   IForgetPassword,
   ILoginData,
   ISendOpt,
@@ -43,6 +44,7 @@ import uploadFile from "../../middleware/uploadFile"
 import hasPermission from "../../middleware/permission"
 import { UserRoles } from "../../constants"
 import { queryParamsValidator } from "./validators/query-params-validator"
+import createUserValidator from "./validators/create-user-validator"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -202,6 +204,19 @@ authRouter.delete(
   ],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.deleteUserByAdmin(req as AuthRequest, res, next),
+  ),
+)
+
+authRouter.post(
+  "/create-user",
+  [
+    checkAccessToken,
+    uploadFile.single("avatar"),
+    hasPermission([UserRoles.ADMIN]) as RequestHandler,
+    createUserValidator as unknown as RequestHandler,
+  ],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.createUser(req as AuthRequest<ICreateUser>, res, next),
   ),
 )
 
