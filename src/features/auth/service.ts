@@ -1,3 +1,4 @@
+import { GetQueryParams } from "../../types"
 import UserModel from "./model"
 import { IUser } from "./type"
 
@@ -17,8 +18,27 @@ class AuthService {
     return await user.save()
   }
 
-  async gets(): Promise<(typeof UserModel)[]> {
-    return await this.userModel.find()
+  async gets({ perPage, currentPage, q }: GetQueryParams) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await UserModel.aggregate([
+      ...(q
+        ? [
+            {
+              $match: {
+                fullName: {
+                  $regex: new RegExp(q, "i"),
+                },
+              },
+            },
+          ]
+        : []),
+      {
+        $facet: {
+          metadata: [{ $count: "totalCount" }],
+          data: [{ $skip: (currentPage - 1) * perPage }, { $limit: perPage }],
+        },
+      },
+    ])
   }
 
   async delete(userId: string) {
