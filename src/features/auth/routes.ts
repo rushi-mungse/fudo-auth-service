@@ -45,6 +45,7 @@ import hasPermission from "../../middleware/permission"
 import { UserRoles } from "../../constants"
 import { queryParamsValidator } from "./validators/query-params-validator"
 import createUserValidator from "./validators/create-user-validator"
+import editUserValidator from "./validators/edit-user-validator"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -217,6 +218,23 @@ authRouter.post(
   ],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.createUser(req as AuthRequest<ICreateUser>, res, next),
+  ),
+)
+
+authRouter.post(
+  "/:userId",
+  [
+    checkAccessToken,
+    uploadFile.single("avatar"),
+    hasPermission([UserRoles.ADMIN]) as RequestHandler,
+    editUserValidator as unknown as RequestHandler,
+  ],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.editUser(
+      req as AuthRequest<Omit<ICreateUser, "password">>,
+      res,
+      next,
+    ),
   ),
 )
 

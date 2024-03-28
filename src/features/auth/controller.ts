@@ -590,6 +590,36 @@ class AuthController {
 
     return res.json({ user, message: "User created successfully." })
   }
+
+  async editUser(
+    req: AuthRequest<Omit<ICreateUser, "password">>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const result = validationResult(req)
+    if (!result.isEmpty())
+      return next(createHttpError(400, result.array()[0].msg as string))
+
+    const file = req.file
+    const userId = req.params.userId
+    const { fullName, email, role, phoneNumber } = req.body
+
+    const user = await this.authService.getById(userId)
+    if (!user) return next(createHttpError(400, "User not found!"))
+
+    if (file) {
+      const uploadedFile = await this.uploadFile(file.path)
+      user.avatar = uploadedFile.url
+    }
+    user.fullName = fullName
+    user.role = role
+    user.email = email
+    user.phoneNumber = phoneNumber
+
+    await this.authService.save(user)
+
+    return res.json({ user, message: "User edited successfully." })
+  }
 }
 
 export default AuthController
