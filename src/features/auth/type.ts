@@ -59,3 +59,11 @@ export interface IGetUserResponse {
   metadata: [{ totalCount: number }]
   data: IUser[]
 }
+
+export interface ICreateUser {
+  fullName: string
+  role: "admin" | "customer"
+  email: string
+  password: string
+  phoneNumber: string
+}
