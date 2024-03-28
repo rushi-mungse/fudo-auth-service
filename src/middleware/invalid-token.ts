@@ -18,7 +18,6 @@ const invalidToken = function (
 
   try {
     const token = tokenService.verifyRefreshToken(refreshToken)
-    logger.info(token)
     if (token) return next(createHttpError(400, "User already login!"))
     return next()
   } catch (error) {
