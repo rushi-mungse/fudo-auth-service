@@ -5,6 +5,7 @@ import createHttpError from "http-errors"
 
 import {
   IChangePassword,
+  ICreateUser,
   IForgetPassword,
   IGetUserResponse,
   ILoginData,
@@ -557,6 +558,37 @@ class AuthController {
     } catch (error) {
       return next(error)
     }
+  }
+
+  async createUser(
+    req: AuthRequest<ICreateUser>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const result = validationResult(req)
+    if (!result.isEmpty())
+      return next(createHttpError(400, result.array()[0].msg as string))
+
+    const file = req.file
+    if (!file) return next(createHttpError(400, "User picture not found!"))
+
+    const { fullName, email, password, role, phoneNumber } = req.body
+
+    const isUser = await this.authService.getByEmail(email)
+    if (isUser) return next(createHttpError(400, "User already registered!"))
+
+    const hashPassword = await this.credentialService.hashData(password)
+    const uploadedFile = await this.uploadFile(file.path)
+    const user = await this.authService.save({
+      fullName,
+      email,
+      role,
+      phoneNumber,
+      avatar: uploadedFile.url,
+      password: hashPassword,
+    })
+
+    return res.json({ user, message: "User created successfully." })
   }
 }
 
