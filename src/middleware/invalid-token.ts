@@ -4,6 +4,7 @@ import createHttpError from "http-errors"
 import { ICookieData } from "../types"
 import TokenService from "../service/token"
 import TokenModel from "../model/token"
+import logger from "../config/logger"
 
 const tokenService = new TokenService(TokenModel)
 
@@ -17,6 +18,7 @@ const invalidToken = function (
 
   try {
     const token = tokenService.verifyRefreshToken(refreshToken)
+    logger.info(token)
     if (token) return next(createHttpError(400, "User already login!"))
     return next()
   } catch (error) {
