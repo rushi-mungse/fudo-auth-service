@@ -6,6 +6,7 @@ import createHttpError from "http-errors"
 import {
   IChangePassword,
   IForgetPassword,
+  IGetUserResponse,
   ILoginData,
   ISendOpt,
   ISetPassword,
@@ -499,8 +500,36 @@ class AuthController {
   }
 
   async getUsers(req: AuthRequest, res: Response, next: NextFunction) {
-    const users = await this.authService.gets()
-    return res.json({ users })
+    const { perPage, currentPage, q } = req.query as unknown as {
+      perPage: number
+      currentPage: number
+      q: string
+    }
+
+    const data = (await this.authService.gets({
+      perPage,
+      currentPage,
+      q,
+    })) as unknown as [IGetUserResponse]
+
+    if (!data[0].metadata.length)
+      return res.json({
+        users: [],
+        metadata: {
+          totolCount: 0,
+          perPage,
+          currentPage,
+        },
+      })
+
+    return res.json({
+      users: data[0].data,
+      metadata: {
+        totalCount: data[0].metadata[0].totalCount,
+        perPage,
+        currentPage,
+      },
+    })
   }
 
   async getUser(req: AuthRequest, res: Response, next: NextFunction) {
@@ -510,6 +539,24 @@ class AuthController {
     const user = await this.authService.getById(userId)
     if (!user) return next(createHttpError(400, "User not found!"))
     return res.json({ user })
+  }
+
+  async deleteUserByAdmin(req: AuthRequest, res: Response, next: NextFunction) {
+    const userId = req.params.userId
+    if (!userId) return next(createHttpError(400, "Invalid user id!"))
+
+    try {
+      const user = await this.authService.getById(userId)
+      if (!user) return next(createHttpError(400, "User not found!"))
+
+      await this.authService.delete(userId)
+      return res.json({
+        id: userId,
+        message: "User deleted successfully.",
+      })
+    } catch (error) {
+      return next(error)
+    }
   }
 }
 
