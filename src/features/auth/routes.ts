@@ -42,6 +42,7 @@ import uploadOnCloudinary from "../../config/uploadOnCloudinary"
 import uploadFile from "../../middleware/uploadFile"
 import hasPermission from "../../middleware/permission"
 import { UserRoles } from "../../constants"
+import { queryParamsValidator } from "./validators/query-params-validator"
 
 const authRouter = express.Router()
 const tokenService = new TokenService(TokenModel)
@@ -172,6 +173,7 @@ authRouter.post(
 
 authRouter.get(
   "/users",
+  queryParamsValidator,
   [
     checkAccessToken,
     hasPermission([UserRoles.ADMIN]) as unknown as RequestHandler,
@@ -189,6 +191,17 @@ authRouter.get(
   ],
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     authController.getUser(req as AuthRequest, res, next),
+  ),
+)
+
+authRouter.delete(
+  "/:userId",
+  [
+    checkAccessToken,
+    hasPermission([UserRoles.ADMIN]) as unknown as RequestHandler,
+  ],
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    authController.deleteUserByAdmin(req as AuthRequest, res, next),
   ),
 )
 
