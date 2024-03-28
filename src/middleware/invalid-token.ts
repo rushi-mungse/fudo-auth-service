@@ -4,7 +4,6 @@ import createHttpError from "http-errors"
 import { ICookieData } from "../types"
 import TokenService from "../service/token"
 import TokenModel from "../model/token"
-import logger from "../config/logger"
 
 const tokenService = new TokenService(TokenModel)
 
