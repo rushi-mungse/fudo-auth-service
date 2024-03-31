@@ -17,6 +17,7 @@ import uploadOnCloudinary from "../../config/uploadOnCloudinary"
 import hasPermission from "../../middleware/permission"
 import { UserRoles } from "../../constants"
 import createProductValidator from "./validators/create-product-validator"
+import { queryParamsValidator } from "./validators/query-params-validator"
 
 const productRouter = express.Router()
 const productService = new ProductService(ProductModel)
@@ -65,6 +66,7 @@ productRouter.delete(
 
 productRouter.get(
   "/",
+  queryParamsValidator,
   asyncWrapper((req: Request, res: Response, next: NextFunction) =>
     productController.gets(req, res, next),
   ),

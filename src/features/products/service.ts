@@ -1,5 +1,7 @@
+import mongoose from "mongoose"
+import { GetQueryParams } from "../../types"
 import ProductModel from "./model"
-import { IProduct } from "./type"
+import { Filters, IProduct } from "./type"
 
 class ProductService {
   constructor(private productModel: typeof ProductModel) {}
@@ -18,8 +20,55 @@ class ProductService {
     return await this.productModel.deleteOne({ _id: productId })
   }
 
-  async gets() {
-    return await this.productModel.find().populate("categoryId")
+  async gets({ perPage, currentPage, q, isPublish, category }: GetQueryParams) {
+    const filters: Filters = {}
+
+    if (isPublish == "true") filters.isPublish = true
+    if (category && mongoose.Types.ObjectId.isValid(category))
+      filters.categoryId = new mongoose.Types.ObjectId(category)
+
+    const query = new RegExp(q, "i")
+
+    const matchQuary = {
+      ...filters,
+      name: query,
+    }
+
+    const aggregate = this.productModel.aggregate([
+      {
+        $match: matchQuary,
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "categoryId",
+          foreignField: "_id",
+          as: "category",
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                attribute: 1,
+                priceConfiguration: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: "$category",
+      },
+      {
+        $facet: {
+          metadata: [{ $count: "totalCount" }],
+          data: [{ $skip: (currentPage - 1) * perPage }, { $limit: perPage }],
+        },
+      },
+    ])
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await aggregate.exec()
   }
 }
 

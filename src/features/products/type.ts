@@ -1,4 +1,4 @@
-import { Document } from "mongoose"
+import mongoose, { Document } from "mongoose"
 import { ICategoryModal } from "../category/type"
 
 export interface IAttribute {
@@ -39,3 +39,8 @@ export interface IProduct {
 }
 
 export type IProductModel = IProduct & Document
+
+export interface Filters {
+  isPublish?: boolean
+  categoryId?: mongoose.Types.ObjectId
+}

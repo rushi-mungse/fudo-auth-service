@@ -36,4 +36,6 @@ export interface GetQueryParams {
   currentPage: number
   perPage: number
   q: string
+  category?: string
+  isPublish?: string
 }

@@ -3,9 +3,10 @@ import createHttpError from "http-errors"
 import { Request, NextFunction, Response } from "express"
 import { UploadApiResponse } from "cloudinary"
 
-import { AuthRequest } from "../../types"
+import { AuthRequest, GetQueryParams } from "../../types"
 import { IAttribute, IPriceConfiguration, IProduct, IProductBody } from "./type"
 import ProductService from "./service"
+import { IGetUserResponse } from "../auth/type"
 
 class ProductController {
   constructor(
@@ -127,8 +128,35 @@ class ProductController {
   }
 
   async gets(req: Request, res: Response, next: NextFunction) {
-    const products = await this.productService.gets()
-    res.json({ products, message: "Product deleted successfully." })
+    const { perPage, currentPage, q, isPublish, category } =
+      req.query as unknown as GetQueryParams
+
+    const data = (await this.productService.gets({
+      perPage,
+      currentPage,
+      q,
+      isPublish,
+      category,
+    })) as unknown as [IGetUserResponse]
+
+    if (!data[0].metadata.length)
+      return res.json({
+        products: [],
+        metadata: {
+          totolCount: 0,
+          perPage,
+          currentPage,
+        },
+      })
+
+    return res.json({
+      products: data[0].data,
+      metadata: {
+        totalCount: data[0].metadata[0].totalCount,
+        perPage,
+        currentPage,
+      },
+    })
   }
 
   async get(req: Request, res: Response, next: NextFunction) {
