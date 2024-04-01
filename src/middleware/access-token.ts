@@ -4,7 +4,6 @@ import { GetVerificationKey, expressjwt } from "express-jwt"
 
 import { ICookieData } from "../types"
 import { JWKS_URL } from "../config"
-import logger from "../config/logger"
 
 const checkAccessToken = expressjwt({
   secret: jwksClient.expressJwtSecret({
