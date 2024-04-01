@@ -166,14 +166,14 @@ class AuthController {
      */
     res.cookie("accessToken", accessToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
     })
 
     res.cookie("refreshToken", refreshToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365,
     })
@@ -199,13 +199,13 @@ class AuthController {
 
     res.clearCookie("accessToken", {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
     })
 
     res.clearCookie("refreshToken", {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
     })
 
@@ -251,14 +251,14 @@ class AuthController {
 
     res.cookie("accessToken", accessToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
     })
 
     res.cookie("refreshToken", refreshToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365,
     })
@@ -302,14 +302,14 @@ class AuthController {
 
     res.cookie("accessToken", accessToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
     })
 
     res.cookie("refreshToken", refreshToken, {
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365,
     })
