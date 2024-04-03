@@ -40,6 +40,13 @@ categoryRouter.get(
   ),
 )
 
+categoryRouter.get(
+  "/:categoryName",
+  asyncWrapper((req: Request, res: Response, next: NextFunction) =>
+    categoryController.getByName(req, res, next),
+  ),
+)
+
 categoryRouter.put(
   "/:categoryId",
   categoryValidator,

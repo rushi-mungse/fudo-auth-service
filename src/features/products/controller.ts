@@ -7,6 +7,7 @@ import { AuthRequest, GetQueryParams } from "../../types"
 import { IAttribute, IPriceConfiguration, IProduct, IProductBody } from "./type"
 import ProductService from "./service"
 import { IGetUserResponse } from "../auth/type"
+import mongoose from "mongoose"
 
 class ProductController {
   constructor(
@@ -104,7 +105,9 @@ class ProductController {
     product.isPublish = productData.isPublish
     product.description = productData.description
     product.discount = productData.discount
-    product.categoryId = productData.categoryId
+    product.categoryId = new mongoose.Types.ObjectId(
+      productData.categoryId as string,
+    )
     product.preparationTime = productData.preparationTime
     product.attributes = productData.attributes
     product.priceConfiguration = productData.priceConfiguration
@@ -163,6 +166,7 @@ class ProductController {
     const productId = req.params.productId
 
     const product = await this.productService.getById(productId)
+
     if (!product) {
       return next(createHttpError(400, "Product not found!"))
     }

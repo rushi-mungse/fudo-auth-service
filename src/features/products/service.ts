@@ -7,13 +7,39 @@ class ProductService {
   constructor(private productModel: typeof ProductModel) {}
 
   async save(product: IProduct) {
-    return (await this.productModel.create(product)).populate("categoryId")
+    const newProduct = new ProductModel(product)
+    return (await newProduct.save()).populate("categoryId")
   }
 
   async getById(productId: string) {
-    return await this.productModel
-      .findOne({ _id: productId })
-      .populate("categoryId")
+    const aggregate = this.productModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(productId) } },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "categoryId",
+          foreignField: "_id",
+          as: "category",
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                attribute: 1,
+                priceConfiguration: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: "$category",
+      },
+    ])
+
+    const products = (await aggregate.exec()) as IProduct[]
+    if (products.length) return products[0]
+    return null
   }
 
   async delete(productId: string) {
@@ -22,8 +48,7 @@ class ProductService {
 
   async gets({ perPage, currentPage, q, isPublish, category }: GetQueryParams) {
     const filters: Filters = {}
-
-    if (isPublish == "true") filters.isPublish = true
+    if (isPublish === "true") filters.isPublish = true
     if (category && mongoose.Types.ObjectId.isValid(category))
       filters.categoryId = new mongoose.Types.ObjectId(category)
 

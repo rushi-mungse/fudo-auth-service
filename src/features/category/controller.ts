@@ -69,6 +69,13 @@ class CategoryController {
     const categories = await this.categoryService.gets()
     return res.json({ categories })
   }
+
+  async getByName(req: Request, res: Response, next: NextFunction) {
+    const categoryName = req.params.categoryName
+
+    const category = await this.categoryService.getByCategoryName(categoryName)
+    return res.json({ category })
+  }
 }
 
 export default CategoryController

@@ -27,6 +27,7 @@ export interface IProductBody {
   priceConfiguration: string
 }
 export interface IProduct {
+  _id?: string
   name: string
   description: string
   image: string
