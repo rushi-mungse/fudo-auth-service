@@ -11,7 +11,7 @@ import UserModel from "../features/auth/model"
 const tokenService = new TokenService(TokenModel)
 const userService = new AuthService(UserModel)
 
-const invalidToken = function (
+const invalidToken = async function (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -21,7 +21,7 @@ const invalidToken = function (
   try {
     const token = tokenService.verifyRefreshToken(refreshToken) as TJwtPayload
     const userId = token.userId
-    const user = userService.getById(userId)
+    const user = await userService.getById(userId)
     if (!user) return next()
     logger.info(token)
     if (token) return next(createHttpError(400, "User already login!"))
