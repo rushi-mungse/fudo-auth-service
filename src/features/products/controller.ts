@@ -112,7 +112,10 @@ class ProductController {
     product.attributes = productData.attributes
     product.priceConfiguration = productData.priceConfiguration
 
-    const newProduct = await this.productService.save(product)
+    const newProduct = await this.productService.updateProduct(
+      product._id!,
+      product,
+    )
 
     return res.json({ product: newProduct })
   }

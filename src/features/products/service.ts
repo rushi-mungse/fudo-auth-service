@@ -11,6 +11,18 @@ class ProductService {
     return (await newProduct.save()).populate("categoryId")
   }
 
+  async updateProduct(productId: string, product: IProduct) {
+    return (await this.productModel.findOneAndUpdate(
+      { _id: productId },
+      {
+        $set: product,
+      },
+      {
+        new: true,
+      },
+    )) as IProduct
+  }
+
   async getById(productId: string) {
     const aggregate = this.productModel.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(productId) } },
